@@ -21,7 +21,7 @@ class Player:
         self.terminal_accel = 2
         self.friction = 1
 
-    def controll(self):
+    def control(self):
         pressed = pygame.key.get_pressed()
 
         if pressed[pygame.K_w] or pressed[pygame.K_UP]:
@@ -82,7 +82,7 @@ while running:
                 running = False
 
     # Update
-    player.controll()
+    player.control()
     player.move()
 
     # Draw
