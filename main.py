@@ -2,7 +2,7 @@ import pygame
 from math import copysign
 
 pygame.init()
-screen = pygame.display.set_mode((240, 160), pygame.SCALED)
+screen = pygame.display.set_mode((240*4, 160*4), pygame.SCALED)
 clock = pygame.time.Clock()
 
 
@@ -10,16 +10,19 @@ class Player:
     def __init__(self, position, image_path):
         super().__init__()
         self.image = pygame.image.load(image_path)
+        self.image = pygame.transform.scale(self.image,
+                                            (self.image.get_rect()[2]*4,
+                                             self.image.get_rect()[3]*4))
 
         self.rect = self.image.get_rect()
         self.position = list(position)
         self.rect.center = list(self.position)  # type: ignore
 
-        self.speed = 0.7
+        self.speed = 1
         self.dir = [0, 0]
         self.accel = list(self.dir)
-        self.terminal_accel = 2
-        self.friction = 1
+        self.terminal_accel = 3
+        self.friction = .1
 
     def control(self):
         pressed = pygame.key.get_pressed()
