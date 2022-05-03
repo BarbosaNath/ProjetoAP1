@@ -72,8 +72,14 @@ class Player:
         canvas.blit(self.image, self.rect)
 
 
-player = Player((120, 80), 'player.png')
+player = Player((120*4, 80*4), 'player.png')
 
+
+life = pygame.image.load('life.png')
+life_rect = life.get_rect()
+life_rect.width *= 4
+life_rect.height *= 4
+life = pygame.transform.scale(life, life_rect.size)
 
 running = True
 while running:
@@ -91,6 +97,7 @@ while running:
     # Draw
     screen.fill('white')
     player.draw(screen)
+    screen.blit(life, life.get_rect())
     pygame.display.update()
 
     # Clock at 60fps
