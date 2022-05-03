@@ -2,7 +2,7 @@ import pygame
 from math import copysign
 
 pygame.init()
-screen = pygame.display.set_mode((600, 300))
+screen = pygame.display.set_mode((240, 160), pygame.SCALED)
 clock = pygame.time.Clock()
 
 
@@ -69,7 +69,7 @@ class Player:
         canvas.blit(self.image, self.rect)
 
 
-player = Player((300, 150), 'player.png')
+player = Player((120, 80), 'player.png')
 
 
 running = True
