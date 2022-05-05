@@ -1,6 +1,6 @@
 import Menu
 
-main_menu = ['Admin',
+main_menu = ['Jose',
              'Funcionario',
              'Sair'
              ]
