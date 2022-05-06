@@ -43,3 +43,50 @@ def draw(options, title='', c='X', h='-', v='|') -> None:
     # \ ...    \
     # \ n - Z  \
     # X--------X
+
+
+def draw_line(option, line, options=[], size=0, title='', h='-', v='|',):
+    if options != []:
+        if size == 0:
+            size = len(max(options+[title], key=len))
+        sh = len(str(len(options)))
+    else:
+        sh = len(str(line))
+
+    s = ' '
+
+    lo = sh - len(str(line+1))
+    sp = size-lo-len(option)
+
+    if len(option) == size:
+        print(f'{v} {s*(lo)}{line+1} {h} {option} {v}')
+    elif len(option) >= 10:
+        if line >= 9:
+            print(f'{v} {s*(lo)}{line+1} {h} {option} {s*(sp)}{v}')
+        else:
+            print(f'{v} {s*(lo)}{line+1} {h} {option} {s*(sp+1)}{v}')
+    else:
+        print(f'{v} {s*(lo)}{line+1} {h} {option} {s*sp}{v}')
+
+
+def fill(options, info):
+    new = []
+    for i, option in enumerate(options):
+        if '{' in option:
+            temp = option.split('{')
+            temp = temp[-1].strip('}')
+            new.append(option.replace(temp, '').format(info[temp]))
+            print(new)
+    return new
+
+
+teste = ['Nome: {nome}',
+         'Idade: {idade}',
+         'Email: {email}']
+
+test = {'nome': 'Jão',
+        'idade': '20',
+        'email': 'jão@email.com'}
+
+teste = fill(teste, test)
+draw(teste)

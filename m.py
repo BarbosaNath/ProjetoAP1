@@ -1,20 +1,32 @@
 import Menu
 
+class Funcionario:
+    def __init__(self) -> None:
+        self.nome: str
+        self.data_nascimento: str
+        self.cpf: str
+        self.rg: str
+        self.endereco: str
+        self.cidade: str
+        self.bairro: str
+        self.telefone: str
+        self.email: str
+        self.estado_civil: str
+
 main_menu = ['Admin',
              'Funcionario',
              'Sair'
              ]
 
-funcionario_menu = [
-    'Ver lista de produtos cadastrados',
-    'Cadastrar produto',
-    'Editar produto',
-    'Remover Produto',
-    'Sair']
+admin_menu = ['Cadastrar Funcionario No Banco de Dados',
+              'Remover Funcionario',
+              'Adicionar comentario sobre Funcionario',
+              'Enviar Nota de Funcionario',
+              'Sair']
 
 
 Menu.clear()
-Menu.draw(main_menu, title='Main Menu')
+Menu.draw(main_menu, 'Bem Vindo ao Sistema')
 menu = input(f'Digite uma opção [1-{len(main_menu)}] $ ')
 
 while menu != str(len(main_menu)):
@@ -42,12 +54,7 @@ while menu != str(len(main_menu)):
                 menu == '0'
                 while menu != '5':
                     Menu.clear()
-                    Menu.draw(['Cadastrar Funcionario No Banco de Dados',
-                               'Remover Funcionario',
-                               'Adicionar Nota a Funcionario',
-                               'Enviar Nota de Funcionario',
-                               'Sair'
-                               ])
+                    Menu.draw(admin_menu)
                     menu = input('Digite uma opção [1-5] $ ')
 
                     if menu == '1':
@@ -84,15 +91,14 @@ while menu != str(len(main_menu)):
                                 senha = ''
                                 while menu != '4':
                                     Menu.draw([f'Defina seu Login: {login}',
-                                              f'Defina sua senha de acesso:{senha}',
-                                              f'Confirmar',              
-                                              f'Cancelar'], title='Cadastrar Novo Funcionario')
+                                               f'Defina sua senha de acesso: {senha}',
+                                               f'Confirmar',
+                                               f'Cancelar'], title='Cadastrar Novo Funcionario')
                                     menu = input('Digite uma opção [1-4] $ ')
                                     if menu == '1':
                                         login = input('Defina seu login: ')
                                     if menu == '2':
                                         senha = input('Defina sua senha: ')
-                                                 
 
     if menu == '2':
         menu = '0'
@@ -114,5 +120,5 @@ while menu != str(len(main_menu)):
                 idade = input('Editar Idade: ')
 
     Menu.clear()
-    Menu.draw(main_menu)
+    Menu.draw(main_menu, 'Bem Vindo ao Sistema')
     menu = input(f'Digite uma opção [1-{len(main_menu)}] $ ')
