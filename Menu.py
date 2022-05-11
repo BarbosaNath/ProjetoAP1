@@ -9,7 +9,9 @@ def clear():
         os.system('clear')
 
 
-def draw(options, title='', c='X', h='-', v='|') -> None:
+def draw(options, title='', ask=True, cls=True, c='X', h='-', v='|'):
+    if cls:
+        clear()
     size = len(max(options+[title], key=len))  # Tamanho da maior str da lista
     s = ' '                            # eSpaço vazio para operações com str
 
@@ -36,6 +38,10 @@ def draw(options, title='', c='X', h='-', v='|') -> None:
             print(f'{v} {s*(lo)}{i+1} {h} {option} {s*sp}{v}')
 
     print(f'{c}{h*(size+sh+5)}{c}')
+    if ask:
+        return input(f'Digite uma opção [1-{len(options)}] $ ')
+    else:
+        return
 
     # X--------X
     # \ 1 - A  \
@@ -76,17 +82,6 @@ def fill(options, info):
             temp = option.split('{')
             temp = temp[-1].strip('}')
             new.append(option.replace(temp, '').format(info[temp]))
-            print(new)
+        else:
+            new.append(options[i])
     return new
-
-
-teste = ['Nome: {nome}',
-         'Idade: {idade}',
-         'Email: {email}']
-
-test = {'nome': 'Jão',
-        'idade': '20',
-        'email': 'jão@email.com'}
-
-teste = fill(teste, test)
-draw(teste)

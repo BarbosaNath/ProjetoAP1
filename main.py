@@ -1,106 +1,43 @@
-import pygame
-from math import copysign
-
-pygame.init()
-screen = pygame.display.set_mode((240*4, 160*4), pygame.SCALED)
-clock = pygame.time.Clock()
+import Menu
+import Tab
 
 
-class Player:
-    def __init__(self, position, image_path):
-        super().__init__()
-        self.image = pygame.image.load(image_path)
-        self.image = pygame.transform.scale(self.image,
-                                            (self.image.get_rect()[2]*4,
-                                             self.image.get_rect()[3]*4))
+main_menu = ['Admin',
+             'Funcionario',
+             'Sair']
 
-        self.rect = self.image.get_rect()
-        self.position = list(position)
-        self.rect.center = list(self.position)  # type: ignore
-
-        self.speed = 1
-        self.dir = [0, 0]
-        self.accel = list(self.dir)
-        self.terminal_accel = 3
-        self.friction = .1
-
-    def control(self):
-        pressed = pygame.key.get_pressed()
-
-        if pressed[pygame.K_w] or pressed[pygame.K_UP]:
-            self.dir[1] = -1
-        if pressed[pygame.K_s] or pressed[pygame.K_DOWN]:
-            self.dir[1] = 1
-        if pressed[pygame.K_a] or pressed[pygame.K_LEFT]:
-            self.dir[0] = -1
-        if pressed[pygame.K_d] or pressed[pygame.K_RIGHT]:
-            self.dir[0] = 1
-
-    def move(self):
-        self.accel[0] += self.dir[0] * self.speed  # type: ignore
-        self.accel[1] += self.dir[1] * self.speed  # type: ignore
-
-        self.position[0] += self.accel[0]
-        self.position[1] += self.accel[1]
-
-        if abs(self.accel[0]) >= self.terminal_accel:
-            self.accel[0] = copysign(self.terminal_accel,  # type: ignore
-                                     self.accel[0])
-
-        if abs(self.accel[1]) >= self.terminal_accel:
-            self.accel[1] = copysign(self.terminal_accel,  # type: ignore
-                                     self.accel[1])
-
-        if self.dir[0] == 0:
-            if abs(self.accel[0]) > .5:
-                self.accel[0] -= copysign(self.friction,  # type: ignore
-                                          self.accel[0])
-            else:
-                self.accel[0] = 0
-
-        if self.dir[1] == 0:
-            if abs(self.accel[1]) > .5:
-                self.accel[1] -= copysign(self.friction,  # type: ignore
-                                          self.accel[1])
-            else:
-                self.accel[1] = 0
-
-        self.rect.center = self.position  # type: ignore
-        self.dir = [0, 0]
-
-    def draw(self, canvas):
-        canvas.blit(self.image, self.rect)
+admin_menu = ['Cadastrar Funcionario No Banco de Dados',
+              'Remover Funcionario',
+              'Adicionar comentario sobre Funcionario',
+              'Enviar Nota de Funcionario',
+              'Sair']
 
 
-player = Player((120*4, 80*4), 'player.png')
+menu = '0'
+while menu != str(len(main_menu)):
+    if menu == '1':
+        login, senha = Tab.login()
 
+        if login == 'admin' and senha == 'admin':
+            menu == '0'
+            while menu != '5':
+                menu = Menu.draw(admin_menu)
+                if menu == '1':
+                    Tab.cadastrar()
 
-life = pygame.image.load('life.png')
-life_rect = life.get_rect()
-life_rect.width *= 4
-life_rect.height *= 4
-life = pygame.transform.scale(life, life_rect.size)
+    if menu == '2':
+        menu = '0'
+        idade = ''
+        nome = ''
+        while menu != '4':
+            menu = Menu.draw([f'Nome: {nome}',
+                              f'Idade: {idade}',
+                              'Confirmar',
+                              'Cancelar'
+                              ])
+            if menu == '1':
+                nome = input('Editar Nome: ')
+            elif menu == '2':
+                idade = input('Editar Idade: ')
 
-running = True
-while running:
-    for e in pygame.event.get():
-        if e.type == pygame.QUIT:
-            running = False
-        elif e.type == pygame.KEYDOWN:
-            if e.key == pygame.K_ESCAPE:
-                running = False
-
-    # Update
-    player.control()
-    player.move()
-
-    # Draw
-    screen.fill('white')
-    player.draw(screen)
-    screen.blit(life, life.get_rect())
-    pygame.display.update()
-
-    # Clock at 60fps
-    clock.tick(60)
-
-pygame.quit()
+    menu = Menu.draw(main_menu, 'Bem Vindo ao SGE')
